@@ -1,0 +1,30 @@
+<div class="category-nav">
+  <div class="nav-container">
+    <div class="hamburger-menu" [class.active]="activeCategory === 'all'" (click)="selectCategory('all')">
+      <i class="fas fa-bars"></i> All
+    </div>
+    <ul class="category-list">
+      <li class="category-item" [class.active]="activeCategory === 'electronics'">
+        <a (click)="selectCategory('electronics')">Electronics</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'sweets'">
+        <a (click)="selectCategory('sweets')">Sweets</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'today-deals'">
+        <a (click)="selectCategory('today-deals')">Today's Deals</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'customer-service'">
+        <a (click)="selectCategory('customer-service')">Customer Service</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'registry'">
+        <a (click)="selectCategory('registry')">Registry</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'gift-cards'">
+        <a (click)="selectCategory('gift-cards')">Gift Cards</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'sell'">
+        <a (click)="selectCategory('sell')">Sell</a>
+      </li>
+    </ul>
+  </div>
+</div>

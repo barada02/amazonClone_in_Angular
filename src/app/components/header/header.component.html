@@ -1,0 +1,73 @@
+<header class="amazon-header">
+  <div class="header-container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <img src="assets/amazonlogo.jpg" alt="Amazon Logo" class="amazon-logo">
+    </div>
+
+    <!-- Location Section -->
+    <div class="location-section">
+      <div class="location-icon">
+        <i class="fa fa-map-marker"></i>
+      </div>
+      <div class="location-text">
+        <span class="deliver-to">Deliver to</span>
+        <span class="country">India</span>
+      </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-dropdown">
+        <select>
+          <option value="all">All</option>
+          <option value="electronics">Electronics</option>
+          <option value="sweets">Sweets</option>
+        </select>
+      </div>
+      <div class="search-input">
+        <input type="text" placeholder="Search Amazon">
+      </div>
+      <div class="search-button">
+        <button>
+          <img src="assets/search.png" alt="Search" class="search-icon">
+        </button>
+      </div>
+    </div>
+
+    <!-- Account Section -->
+    <div class="account-section" (click)="currentUser ? null : openAuthModal()">
+      <div class="account-text">
+        <span class="hello">{{ currentUser ? 'Hello, ' + currentUser.fullName : 'Hello, Sign in' }}</span>
+        <span class="account">
+          <ng-container *ngIf="currentUser; else accountLists">
+            <span (click)="logout()" class="logout-link">Sign Out</span>
+          </ng-container>
+          <ng-template #accountLists>Account & Lists</ng-template>
+        </span>
+      </div>
+    </div>
+
+    <!-- Returns & Orders Section -->
+    <div class="returns-section">
+      <div class="returns-text">
+        <span class="returns">Returns</span>
+        <span class="orders">& Orders</span>
+      </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="cart-section">
+      <div class="cart-icon">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="cart-count">{{ currentUser?.cart?.length || 0 }}</span>
+      </div>
+      <div class="cart-text">
+        <span>Cart</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Auth Modal -->
+<app-auth-modal *ngIf="showAuthModal" (close)="closeAuthModal()"></app-auth-modal>

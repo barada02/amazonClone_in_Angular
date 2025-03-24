@@ -1,0 +1,77 @@
+.signup-form-container {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #a6a6a6;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(0,0,0,.07) inset;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+input:focus {
+  border-color: #e77600;
+  box-shadow: 0 0 3px 2px rgba(228,121,17,.5);
+}
+
+input.invalid {
+  border-color: #d00;
+  box-shadow: 0 0 0 2px rgba(221,0,0,.2);
+}
+
+.validation-error {
+  color: #d00;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.error-message {
+  color: #d00;
+  background-color: #fff;
+  border: 1px solid #d00;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 8px 10px;
+  background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+  border: 1px solid #a88734;
+  border-radius: 3px;
+  color: #111;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset;
+  margin-top: 10px;
+}
+
+.signup-button:hover {
+  background: linear-gradient(to bottom, #f5d78e, #eeb933);
+}
+
+.signup-button:disabled {
+  background: #f3f3f3;
+  border-color: #aaa;
+  color: #767676;
+  cursor: not-allowed;
+}

@@ -1,0 +1,55 @@
+<div class="product-display-container">
+  <div class="product-section-header">
+    <h2>{{ selectedCategory === 'all' ? 'All Products' : (selectedCategory | titlecase) + ' Products' }}</h2>
+  </div>
+  
+  <!-- Loading indicator -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading products...</p>
+  </div>
+  
+  <!-- Error message -->
+  <div class="error-container" *ngIf="error">
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="retryLoading()">Try Again</button>
+  </div>
+  
+  <!-- Products grid -->
+  <div class="products-grid" *ngIf="!loading && !error">
+    <!-- No products message -->
+    <div class="no-products" *ngIf="products.length === 0">
+      <p>No products found in this category.</p>
+      <button class="retry-button" (click)="retryLoading()">Reload Products</button>
+    </div>
+    
+    <!-- Product cards -->
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-image">
+        <img [src]="getImagePath(product)" [alt]="product.name">
+      </div>
+      <div class="product-info">
+        <h3 class="product-title">{{ product.name }}</h3>
+        <div class="product-price">
+          <span class="current-price">${{ product.offerPrice }}</span>
+          <span class="original-price" *ngIf="product.price > product.offerPrice">${{ product.price }}</span>
+          <span class="discount" *ngIf="product.price > product.offerPrice">{{ calculateDiscount(product.price, product.offerPrice) }}% off</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="reviews">(128)</span>
+        </div>
+        <p class="product-description">{{ product.description }}</p>
+        <button 
+          class="add-to-cart-btn" 
+          (click)="addToCart(product)" 
+          [class.disabled]="!currentUser"
+          [title]="currentUser ? 'Add to Cart' : 'Please sign in to add items to your cart'"
+        >
+          <span *ngIf="currentUser">Add to Cart</span>
+          <span *ngIf="!currentUser">Sign in to Add</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

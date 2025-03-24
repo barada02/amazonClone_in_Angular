@@ -1,0 +1,202 @@
+.amazon-header {
+  background-color: #131921;
+  color: white;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* Logo Section */
+.logo-section {
+  padding: 5px 10px;
+}
+
+.amazon-logo {
+  width: 100px;
+  height: auto;
+}
+
+/* Location Section */
+.location-section {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.location-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.deliver-to {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.country {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Search Section */
+.search-section {
+  display: flex;
+  flex: 1;
+  max-width: 700px;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.search-dropdown select {
+  height: 100%;
+  padding: 0 10px;
+  background-color: #f3f3f3;
+  border: none;
+  border-right: 1px solid #cdcdcd;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+}
+
+.search-input {
+  flex: 1;
+}
+
+.search-input input {
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #febd69;
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-button button {
+  background: none;
+  border: none;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Account Section */
+.account-section, .returns-section {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.account-section {
+  cursor: pointer;
+}
+
+.account-text, .returns-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.hello, .returns {
+  font-size: 12px;
+}
+
+.account, .orders {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.logout-link {
+  color: #e77600;
+  cursor: pointer;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}
+
+/* Cart Section */
+.cart-section {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.cart-icon {
+  position: relative;
+  margin-right: 5px;
+  font-size: 24px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #f08804;
+  color: black;
+  border-radius: 50%;
+  padding: 0 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cart-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .location-section {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .returns-section {
+    display: none;
+  }
+  
+  .search-section {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-wrap: wrap;
+  }
+  
+  .search-section {
+    order: 3;
+    max-width: 100%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .account-section {
+    margin-left: auto;
+  }
+}
