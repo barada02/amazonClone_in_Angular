@@ -1,0 +1,89 @@
+{
+  "products": {
+    "electronics": {
+      "product1": {
+        "id": "e1",
+        "name": "iPhone 15 Pro",
+        "price": 999.99,
+        "offerPrice": 949.99,
+        "description": "Latest iPhone model with advanced camera system and A17 Pro chip",
+        "imagePath": "assets/electronics/Iphone15_pro.jpg",
+        "category": "electronics"
+      },
+      "product2": {
+        "id": "e2",
+        "name": "Samsung Galaxy S24",
+        "price": 899.99,
+        "offerPrice": 849.99,
+        "description": "Samsung's flagship phone with stunning display and powerful performance",
+        "imagePath": "assets/electronics/samsung_S24.jpeg",
+        "category": "electronics"
+      },
+      "product3": {
+        "id": "e3",
+        "name": "Google Pixel 9 Pro XL",
+        "price": 949.99,
+        "offerPrice": 899.99,
+        "description": "Google's premium smartphone with exceptional camera capabilities and clean Android experience",
+        "imagePath": "assets/electronics/Google-Pixel-9-Pro-XL.png",
+        "category": "electronics"
+      }
+    },
+    "sweets": {
+      "product1": {
+        "id": "s1",
+        "name": "Gulab Jamun",
+        "price": 12.99,
+        "offerPrice": 10.99,
+        "description": "Soft, spongy milk-solid-based sweet soaked in sugar syrup",
+        "imagePath": "assets/sweets/gulab-jamun.jpg",
+        "category": "sweets"
+      },
+      "product2": {
+        "id": "s2",
+        "name": "Jalebi",
+        "price": 9.99,
+        "offerPrice": 8.49,
+        "description": "Crispy, pretzel-like sweet soaked in sugar syrup with a distinctive coil shape",
+        "imagePath": "assets/sweets/jalebi.jpg",
+        "category": "sweets"
+      },
+      "product3": {
+        "id": "s3",
+        "name": "Kaju Katli",
+        "price": 15.99,
+        "offerPrice": 13.99,
+        "description": "Diamond-shaped cashew fudge with silver foil topping",
+        "imagePath": "assets/sweets/kaju-katli.jpg",
+        "category": "sweets"
+      },
+      "product4": {
+        "id": "s4",
+        "name": "Kalakand",
+        "price": 11.99,
+        "offerPrice": 9.99,
+        "description": "Milk cake with a grainy texture and cardamom flavor",
+        "imagePath": "assets/sweets/kalakand.jpg",
+        "category": "sweets"
+      },
+      "product5": {
+        "id": "s5",
+        "name": "Laddu",
+        "price": 8.99,
+        "offerPrice": 7.49,
+        "description": "Ball-shaped sweet made from flour, sugar and ghee",
+        "imagePath": "assets/sweets/laddu.jpg",
+        "category": "sweets"
+      },
+      "product6": {
+        "id": "s6",
+        "name": "Peda",
+        "price": 10.99,
+        "offerPrice": 9.49,
+        "description": "Soft, semi-solid milk-based sweet with a smooth texture",
+        "imagePath": "assets/sweets/peda.jpg",
+        "category": "sweets"
+      }
+    }
+  }
+}
