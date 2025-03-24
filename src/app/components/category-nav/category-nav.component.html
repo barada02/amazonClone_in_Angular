@@ -1,17 +1,29 @@
 <nav class="category-nav">
   <div class="nav-container">
-    <div class="hamburger-menu">
+    <div class="hamburger-menu" (click)="selectCategory('all')" [class.active]="activeCategory === 'all'">
       <i class="fa fa-bars"></i>
       <span>All</span>
     </div>
     
     <ul class="category-list">
-      <li class="category-item"><a href="#">Electronics</a></li>
-      <li class="category-item"><a href="#">Sweets</a></li>
-      <li class="category-item"><a href="#">Today's Deals</a></li>
-      <li class="category-item"><a href="#">Customer Service</a></li>
-      <li class="category-item"><a href="#">Gift Cards</a></li>
-      <li class="category-item"><a href="#">Sell</a></li>
+      <li class="category-item" [class.active]="activeCategory === 'electronics'">
+        <a (click)="selectCategory('electronics')" href="javascript:void(0);">Electronics</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'sweets'">
+        <a (click)="selectCategory('sweets')" href="javascript:void(0);">Sweets</a>
+      </li>
+      <li class="category-item">
+        <a href="javascript:void(0);">Today's Deals</a>
+      </li>
+      <li class="category-item">
+        <a href="javascript:void(0);">Customer Service</a>
+      </li>
+      <li class="category-item">
+        <a href="javascript:void(0);">Gift Cards</a>
+      </li>
+      <li class="category-item">
+        <a href="javascript:void(0);">Sell</a>
+      </li>
     </ul>
   </div>
 </nav>

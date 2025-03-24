@@ -18,16 +18,21 @@
   margin-right: 20px;
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+
+.hamburger-menu:hover {
+  background-color: #3a4553;
+}
+
+.hamburger-menu.active {
+  background-color: #3a4553;
+  font-weight: bold;
 }
 
 .hamburger-menu i {
   margin-right: 5px;
-}
-
-.hamburger-menu:hover {
-  border: 1px solid white;
-  border-radius: 2px;
-  padding: 4px 9px;
 }
 
 .category-list {
@@ -40,18 +45,28 @@
 
 .category-item {
   margin-right: 15px;
-  padding: 5px 0;
+  position: relative;
 }
 
 .category-item a {
   color: white;
   text-decoration: none;
+  padding: 5px 8px;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+  display: inline-block;
+  cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
 }
 
 .category-item a:hover {
-  text-decoration: underline;
+  background-color: #3a4553;
+}
+
+.category-item.active a {
+  background-color: #3a4553;
+  font-weight: bold;
 }
 
 /* Responsive adjustments */

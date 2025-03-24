@@ -1,43 +1,44 @@
-<div class="product-display">
-  <div class="product-container">
-    <h2 class="section-title">Featured Products</h2>
+<div class="product-display-container">
+  <div class="product-section-header">
+    <h2>{{ selectedCategory === 'all' ? 'All Products' : (selectedCategory | titlecase) + ' Products' }}</h2>
+  </div>
+  
+  <!-- Loading indicator -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading products...</p>
+  </div>
+  
+  <!-- Error message -->
+  <div class="error-container" *ngIf="error">
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="loadProducts()">Try Again</button>
+  </div>
+  
+  <!-- Products grid -->
+  <div class="products-grid" *ngIf="!loading && !error">
+    <!-- No products message -->
+    <div class="no-products" *ngIf="products.length === 0">
+      <p>No products found in this category.</p>
+    </div>
     
-    <div class="product-grid">
-      <!-- This will be replaced with actual products from Firebase -->
-      <div class="product-card">
-        <div class="product-image">
-          <img src="assets/placeholder-product.jpg" alt="Product">
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">Sample Electronics Product</h3>
-          <div class="product-price">
-            <span class="current-price">$299.99</span>
-            <span class="original-price">$349.99</span>
-          </div>
-          <div class="product-rating">
-            <span class="stars">★★★★☆</span>
-            <span class="reviews">(42)</span>
-          </div>
-          <button class="add-to-cart-btn">Add to Cart</button>
-        </div>
+    <!-- Product cards -->
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-image">
+        <img [src]="product.imagePath || 'assets/placeholder-product.jpg'" [alt]="product.name">
       </div>
-      
-      <div class="product-card">
-        <div class="product-image">
-          <img src="assets/placeholder-product.jpg" alt="Product">
+      <div class="product-info">
+        <h3 class="product-title">{{ product.name }}</h3>
+        <div class="product-price">
+          <span class="current-price">${{ product.offerPrice }}</span>
+          <span class="original-price" *ngIf="product.price > product.offerPrice">${{ product.price }}</span>
         </div>
-        <div class="product-info">
-          <h3 class="product-title">Sample Sweets Product</h3>
-          <div class="product-price">
-            <span class="current-price">$19.99</span>
-            <span class="original-price">$24.99</span>
-          </div>
-          <div class="product-rating">
-            <span class="stars">★★★★★</span>
-            <span class="reviews">(128)</span>
-          </div>
-          <button class="add-to-cart-btn">Add to Cart</button>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="reviews">(128)</span>
         </div>
+        <p class="product-description">{{ product.description }}</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
       </div>
     </div>
   </div>
