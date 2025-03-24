@@ -61,6 +61,48 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
     }
   }
   
+  getImagePath(product: Product): string {
+    // Default placeholder if no image path is provided
+    if (!product.imagePath) {
+      return 'assets/placeholder-product.jpg';
+    }
+    
+    // For Firebase stored images that might be full URLs
+    if (product.imagePath.startsWith('http')) {
+      return product.imagePath;
+    }
+    
+    // For relative paths in the assets folder
+    // Based on our file search, we know the images exist in the assets folder
+    // but the paths might not match exactly
+    
+    // Extract the filename from the path
+    const parts = product.imagePath.split('/');
+    const filename = parts[parts.length - 1];
+    
+    // Check if it's in the electronics category
+    if (product.category === 'electronics') {
+      return `assets/electronics/${filename}`;
+    }
+    
+    // Check if it's in the sweets category
+    if (product.category === 'sweets') {
+      return `assets/sweets/${filename}`;
+    }
+    
+    // If we can't determine the category, return the original path
+    return product.imagePath;
+  }
+  
+  calculateDiscount(originalPrice: number, offerPrice: number): number {
+    if (originalPrice <= 0 || offerPrice <= 0 || offerPrice >= originalPrice) {
+      return 0;
+    }
+    
+    const discount = ((originalPrice - offerPrice) / originalPrice) * 100;
+    return Math.round(discount);
+  }
+  
   retryLoading() {
     this.productService.clearCache();
     this.loadProducts();

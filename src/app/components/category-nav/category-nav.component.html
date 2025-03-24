@@ -1,29 +1,30 @@
-<nav class="category-nav">
+<div class="category-nav">
   <div class="nav-container">
-    <div class="hamburger-menu" (click)="selectCategory('all')" [class.active]="activeCategory === 'all'">
-      <i class="fa fa-bars"></i>
-      <span>All</span>
+    <div class="hamburger-menu" [class.active]="activeCategory === 'all'" (click)="selectCategory('all')">
+      <i class="fas fa-bars"></i> All
     </div>
-    
     <ul class="category-list">
       <li class="category-item" [class.active]="activeCategory === 'electronics'">
-        <a (click)="selectCategory('electronics')" href="javascript:void(0);">Electronics</a>
+        <a (click)="selectCategory('electronics')">Electronics</a>
       </li>
       <li class="category-item" [class.active]="activeCategory === 'sweets'">
-        <a (click)="selectCategory('sweets')" href="javascript:void(0);">Sweets</a>
+        <a (click)="selectCategory('sweets')">Sweets</a>
       </li>
-      <li class="category-item">
-        <a href="javascript:void(0);">Today's Deals</a>
+      <li class="category-item" [class.active]="activeCategory === 'today-deals'">
+        <a (click)="selectCategory('today-deals')">Today's Deals</a>
       </li>
-      <li class="category-item">
-        <a href="javascript:void(0);">Customer Service</a>
+      <li class="category-item" [class.active]="activeCategory === 'customer-service'">
+        <a (click)="selectCategory('customer-service')">Customer Service</a>
       </li>
-      <li class="category-item">
-        <a href="javascript:void(0);">Gift Cards</a>
+      <li class="category-item" [class.active]="activeCategory === 'registry'">
+        <a (click)="selectCategory('registry')">Registry</a>
       </li>
-      <li class="category-item">
-        <a href="javascript:void(0);">Sell</a>
+      <li class="category-item" [class.active]="activeCategory === 'gift-cards'">
+        <a (click)="selectCategory('gift-cards')">Gift Cards</a>
+      </li>
+      <li class="category-item" [class.active]="activeCategory === 'sell'">
+        <a (click)="selectCategory('sell')">Sell</a>
       </li>
     </ul>
   </div>
-</nav>
+</div>

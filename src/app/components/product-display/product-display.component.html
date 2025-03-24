@@ -26,16 +26,17 @@
     <!-- Product cards -->
     <div class="product-card" *ngFor="let product of products">
       <div class="product-image">
-        <img [src]="product.imagePath || 'assets/placeholder-product.jpg'" [alt]="product.name">
+        <img [src]="getImagePath(product)" [alt]="product.name">
       </div>
       <div class="product-info">
         <h3 class="product-title">{{ product.name }}</h3>
         <div class="product-price">
           <span class="current-price">${{ product.offerPrice }}</span>
           <span class="original-price" *ngIf="product.price > product.offerPrice">${{ product.price }}</span>
+          <span class="discount" *ngIf="product.price > product.offerPrice">{{ calculateDiscount(product.price, product.offerPrice) }}% off</span>
         </div>
         <div class="product-rating">
-          <span class="stars">★★★★★</span>
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span class="reviews">(128)</span>
         </div>
         <p class="product-description">{{ product.description }}</p>
