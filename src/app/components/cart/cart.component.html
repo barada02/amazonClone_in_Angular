@@ -1,0 +1,152 @@
+<div class="cart-container">
+  <!-- Back Button -->
+  <div class="back-navigation">
+    <button class="back-button" (click)="continueShopping()">
+      <i class="fa fa-arrow-left"></i> Back to Shopping
+    </button>
+  </div>
+
+  <!-- Cart Items View -->
+  <div *ngIf="checkoutStep === 0">
+    <ng-container *ngIf="cartCount$ | async as cartCount">
+      <div class="cart-header">
+        <h1>Shopping Cart</h1>
+        <button class="clear-cart-btn" (click)="clearCart()" *ngIf="cartCount > 0">Clear Cart</button>
+      </div>
+
+      <div class="empty-cart" *ngIf="cartCount === 0">
+        <div class="empty-cart-message">
+          <h2>Your Amazon Cart is empty</h2>
+          <p>Your shopping cart is waiting. Give it purpose &#8211; fill it with groceries, clothing, household supplies, electronics, and more.</p>
+          <button class="continue-shopping-btn" (click)="continueShopping()">Continue Shopping</button>
+        </div>
+      </div>
+
+      <div class="cart-content" *ngIf="cartCount > 0">
+        <div class="cart-items">
+          <ng-container *ngIf="cartItems$ | async as cartItems">
+            <div class="cart-item" *ngFor="let item of cartItems">
+              <div class="item-image">
+                <img [src]="item.imagePath" [alt]="item.name">
+              </div>
+              <div class="item-details">
+                <h3 class="item-name">{{ item.name }}</h3>
+                <div class="item-price">
+                  <span class="current-price" *ngIf="item.offerPrice">&#8377;{{ item.offerPrice }}</span>
+                  <span class="original-price" [class.strikethrough]="item.offerPrice">&#8377;{{ item.price }}</span>
+                  <span class="discount-badge" *ngIf="getDiscountPercentage(item) > 0">-{{ getDiscountPercentage(item) }}%</span>
+                </div>
+                <p class="item-description">{{ item.description }}</p>
+                <div class="item-actions">
+                  <button class="remove-btn" (click)="removeFromCart(item.id)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="cart-summary">
+          <ng-container *ngIf="cartTotal$ | async as cartTotal">
+            <div class="summary-card">
+              <h3>Order Summary</h3>
+              <div class="summary-row">
+                <span>Items ({{ cartCount }}):</span>
+                <span>&#8377;{{ cartTotal }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Shipping & handling:</span>
+                <span>&#8377;40</span>
+              </div>
+              <div class="summary-row total">
+                <span>Order Total:</span>
+                <span>&#8377;{{ cartTotal + 40 }}</span>
+              </div>
+              <button class="checkout-btn" (click)="proceedToCheckout()">Proceed to Checkout</button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Shipping Address View -->
+  <div *ngIf="checkoutStep === 1" class="checkout-step">
+    <h2>Shipping Address</h2>
+    <div class="address-form">
+      <textarea 
+        [(ngModel)]="shippingAddress" 
+        placeholder="Enter your full shipping address"
+        rows="4"
+        required
+      ></textarea>
+      <div class="form-actions">
+        <button class="back-btn" (click)="checkoutStep = 0">Back to Cart</button>
+        <button class="next-btn" (click)="proceedToPayment()">Continue to Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Method View -->
+  <div *ngIf="checkoutStep === 2" class="checkout-step">
+    <h2>Payment Method</h2>
+    <div class="payment-options">
+      <div class="payment-option">
+        <input type="radio" id="cod" name="payment" value="cod" [(ngModel)]="paymentMethod">
+        <label for="cod">Cash on Delivery</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" id="card" name="payment" value="card" [(ngModel)]="paymentMethod">
+        <label for="card">Credit/Debit Card</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" id="upi" name="payment" value="upi" [(ngModel)]="paymentMethod">
+        <label for="upi">UPI</label>
+      </div>
+    </div>
+
+    <ng-container *ngIf="cartCount$ | async as cartCount">
+      <ng-container *ngIf="cartTotal$ | async as cartTotal">
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row">
+            <span>Items ({{ cartCount }}):</span>
+            <span>&#8377;{{ cartTotal }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping & handling:</span>
+            <span>&#8377;40</span>
+          </div>
+          <div class="summary-row total">
+            <span>Order Total:</span>
+            <span>&#8377;{{ cartTotal + 40 }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping Address:</span>
+            <span class="address-text">{{ shippingAddress }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Payment Method:</span>
+            <span>{{ paymentMethod === 'cod' ? 'Cash on Delivery' : paymentMethod === 'card' ? 'Credit/Debit Card' : 'UPI' }}</span>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="form-actions">
+      <button class="back-btn" (click)="checkoutStep = 1">Back to Shipping</button>
+      <button class="place-order-btn" (click)="confirmOrder()" [disabled]="isProcessing">
+        {{ isProcessing ? 'Processing...' : 'Place Order' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Order Confirmation View -->
+  <div *ngIf="checkoutStep === 3" class="checkout-step confirmation">
+    <div class="confirmation-message">
+      <div class="success-icon">&#10004;</div>
+      <h2>Order Placed Successfully!</h2>
+      <p>Thank you for your purchase. Your order has been placed and will be processed soon.</p>
+      <button class="continue-shopping-btn" (click)="continueShopping()">Continue Shopping</button>
+    </div>
+  </div>
+</div>
