@@ -30,12 +30,14 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
   loadProducts() {
     this.loading = true;
     this.error = null;
+    console.log('Loading products for category:', this.selectedCategory);
     
     if (this.selectedCategory === 'all') {
       this.productService.getAllProducts().subscribe({
         next: (data) => {
           this.products = data;
           this.loading = false;
+          console.log('Loaded all products:', data);
         },
         error: (err) => {
           this.error = 'Failed to load products. Please try again later.';
@@ -48,6 +50,7 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
         next: (data) => {
           this.products = data;
           this.loading = false;
+          console.log('Loaded products for category:', this.selectedCategory, data);
         },
         error: (err) => {
           this.error = 'Failed to load products. Please try again later.';
@@ -56,5 +59,10 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+  
+  retryLoading() {
+    this.productService.clearCache();
+    this.loadProducts();
   }
 }

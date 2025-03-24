@@ -12,7 +12,7 @@
   <!-- Error message -->
   <div class="error-container" *ngIf="error">
     <p class="error-message">{{ error }}</p>
-    <button class="retry-button" (click)="loadProducts()">Try Again</button>
+    <button class="retry-button" (click)="retryLoading()">Try Again</button>
   </div>
   
   <!-- Products grid -->
@@ -20,6 +20,7 @@
     <!-- No products message -->
     <div class="no-products" *ngIf="products.length === 0">
       <p>No products found in this category.</p>
+      <button class="retry-button" (click)="retryLoading()">Reload Products</button>
     </div>
     
     <!-- Product cards -->

@@ -16,7 +16,8 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private baseUrl = 'https://angulartest-93e44-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  // Using the exact Firebase URL from your memory
+  private baseUrl = 'https://angulartest-93e44-default-rtdb.asia-southeast1.firebasedatabase.app';
   private productsCache: Product[] | null = null;
   
   constructor(private http: HttpClient) {}
@@ -27,17 +28,54 @@ export class ProductService {
       return of(this.productsCache);
     }
     
-    return this.http.get<{[key: string]: Product}>(`${this.baseUrl}/products.json`)
+    // First, try to fetch from the nested structure as seen in products-data.json
+    return this.http.get<any>(`${this.baseUrl}/products.json`)
       .pipe(
         map(response => {
           const products: Product[] = [];
-          for (const key in response) {
-            if (response.hasOwnProperty(key)) {
-              products.push({...response[key], id: key});
+          console.log('Raw Firebase response:', response);
+          
+          // Check if response exists and has the expected structure
+          if (response) {
+            // Try the nested structure first (products/electronics and products/sweets)
+            if (response.electronics) {
+              Object.keys(response.electronics).forEach(key => {
+                if (response.electronics[key]) {
+                  products.push({
+                    ...response.electronics[key],
+                    id: response.electronics[key].id || key
+                  });
+                }
+              });
+            }
+            
+            if (response.sweets) {
+              Object.keys(response.sweets).forEach(key => {
+                if (response.sweets[key]) {
+                  products.push({
+                    ...response.sweets[key],
+                    id: response.sweets[key].id || key
+                  });
+                }
+              });
+            }
+            
+            // If no products found with the nested structure, try a flat structure
+            if (products.length === 0) {
+              Object.keys(response).forEach(key => {
+                if (typeof response[key] === 'object' && response[key] !== null) {
+                  products.push({
+                    ...response[key],
+                    id: response[key].id || key
+                  });
+                }
+              });
             }
           }
+          
           // Cache the results
           this.productsCache = products;
+          console.log('Processed products:', products);
           return products;
         }),
         catchError(error => {
@@ -50,11 +88,18 @@ export class ProductService {
   
   getProductsByCategory(category: string): Observable<Product[]> {
     return this.getAllProducts().pipe(
-      map(products => products.filter(product => product.category.toLowerCase() === category.toLowerCase()))
+      map(products => {
+        const filtered = products.filter(product => 
+          product.category && product.category.toLowerCase() === category.toLowerCase()
+        );
+        console.log(`Filtered products for category '${category}':`, filtered);
+        return filtered;
+      })
     );
   }
   
   clearCache() {
     this.productsCache = null;
+    console.log('Product cache cleared');
   }
 }
