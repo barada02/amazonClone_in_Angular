@@ -57,7 +57,7 @@
     </div>
 
     <!-- Cart Section -->
-    <div class="cart-section">
+    <div class="cart-section" [routerLink]="['/cart']">
       <div class="cart-icon">
         <i class="fa fa-shopping-cart"></i>
         <span class="cart-count">{{ currentUser?.cart?.length || 0 }}</span>

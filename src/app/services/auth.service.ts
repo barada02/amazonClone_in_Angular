@@ -219,4 +219,10 @@ export class AuthService {
       })
     );
   }
+
+  // Helper method to update the user state without making an HTTP request
+  updateUserState(user: User): void {
+    this.currentUserSubject.next(user);
+    this.isAuthenticatedSubject.next(true);
+  }
 }

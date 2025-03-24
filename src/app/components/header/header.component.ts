@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { AuthModalComponent } from '../auth/auth-modal/auth-modal.component';
@@ -7,7 +8,7 @@ import { AuthModalComponent } from '../auth/auth-modal/auth-modal.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, AuthModalComponent],
+  imports: [CommonModule, AuthModalComponent, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
