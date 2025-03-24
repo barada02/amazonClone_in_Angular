@@ -34,18 +34,30 @@ export class AuthService {
   }
 
   signup(user: User): Observable<User> {
+    console.log('Attempting to sign up user:', user);
     // First check if username already exists
     return this.checkUserNameExists(user.userName).pipe(
       map(exists => {
+        console.log('Username exists check:', exists);
         if (exists) {
           throw new Error('Username already exists. Please choose a different username.');
         }
         return user;
       }),
       switchMap(newUser => {
-        return this.http.post<{name: string}>(`${this.baseUrl}/users.json`, newUser).pipe(
+        // Ensure cart and purchases are initialized as arrays
+        const userToCreate = {
+          ...newUser,
+          cart: newUser.cart || [],
+          purchases: newUser.purchases || []
+        };
+        
+        console.log('Creating new user in Firebase:', userToCreate);
+        
+        return this.http.post<{name: string}>(`${this.baseUrl}/users.json`, userToCreate).pipe(
           map(response => {
-            const createdUser = { ...newUser, id: response.name };
+            console.log('User created with ID:', response.name);
+            const createdUser = { ...userToCreate, id: response.name };
             return createdUser;
           }),
           catchError(error => {
@@ -58,18 +70,32 @@ export class AuthService {
   }
 
   login(userName: string, mobileNumber: string): Observable<User> {
+    console.log(`Attempting to login with username: ${userName} and mobile: ${mobileNumber}`);
     return this.http.get<{[key: string]: User}>(`${this.baseUrl}/users.json?orderBy="userName"&equalTo="${userName}"`).pipe(
       map(response => {
-        const users = Object.keys(response || {}).map(key => ({
+        // Check if we got any results
+        if (!response || Object.keys(response).length === 0) {
+          console.log('No users found with this username');
+          throw new Error('Invalid username or mobile number');
+        }
+
+        const users = Object.keys(response).map(key => ({
           ...response[key],
           id: key
         }));
 
-        const user = users.find(u => u.mobileNumber === mobileNumber);
+        console.log('Found users with matching username:', users);
+        
+        // Find the user with matching mobile number
+        // Convert both to strings to ensure proper comparison
+        const user = users.find(u => String(u.mobileNumber) === String(mobileNumber));
         
         if (!user) {
+          console.log('No user found with matching mobile number');
           throw new Error('Invalid username or mobile number');
         }
+
+        console.log('Successfully authenticated user:', user);
 
         // Save user to localStorage
         localStorage.setItem('currentUser', JSON.stringify(user));

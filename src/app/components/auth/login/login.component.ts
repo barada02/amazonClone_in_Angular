@@ -33,13 +33,16 @@ export class LoginComponent {
     this.errorMessage = null;
 
     const { userName, mobileNumber } = this.loginForm.value;
+    console.log('Attempting login with:', { userName, mobileNumber });
 
     this.authService.login(userName, mobileNumber).subscribe({
-      next: () => {
+      next: (user) => {
+        console.log('Login successful:', user);
         this.loading = false;
         this.loginSuccess.emit();
       },
       error: (error) => {
+        console.error('Login error:', error);
         this.loading = false;
         this.errorMessage = error.message || 'Login failed. Please try again.';
       }
