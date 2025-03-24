@@ -35,13 +35,28 @@ export class AuthService {
 
   signup(user: User): Observable<User> {
     console.log('Attempting to sign up user:', user);
-    // First check if username already exists
-    return this.checkUserNameExists(user.userName).pipe(
-      map(exists => {
-        console.log('Username exists check:', exists);
-        if (exists) {
+    
+    // First check if username already exists by getting all users
+    return this.http.get(`${this.baseUrl}/users.json`).pipe(
+      map((allUsers: any) => {
+        console.log('All existing users:', allUsers);
+        
+        // Convert Firebase object to array
+        const usersArray = allUsers ? Object.keys(allUsers).map(key => ({
+          ...allUsers[key],
+          id: key
+        })) : [];
+        
+        // Check if username exists
+        const existingUser = usersArray.find(u => 
+          u.userName && u.userName.toLowerCase() === user.userName.toLowerCase()
+        );
+        
+        if (existingUser) {
+          console.log('Username already exists:', existingUser);
           throw new Error('Username already exists. Please choose a different username.');
         }
+        
         return user;
       }),
       switchMap(newUser => {
@@ -58,6 +73,12 @@ export class AuthService {
           map(response => {
             console.log('User created with ID:', response.name);
             const createdUser = { ...userToCreate, id: response.name };
+            
+            // Save user to localStorage and log in automatically
+            localStorage.setItem('currentUser', JSON.stringify(createdUser));
+            this.currentUserSubject.next(createdUser);
+            this.isAuthenticatedSubject.next(true);
+            
             return createdUser;
           }),
           catchError(error => {
@@ -71,40 +92,53 @@ export class AuthService {
 
   login(userName: string, mobileNumber: string): Observable<User> {
     console.log(`Attempting to login with username: ${userName} and mobile: ${mobileNumber}`);
-    return this.http.get<{[key: string]: User}>(`${this.baseUrl}/users.json?orderBy="userName"&equalTo="${userName}"`).pipe(
-      map(response => {
-        // Check if we got any results
-        if (!response || Object.keys(response).length === 0) {
-          console.log('No users found with this username');
+    return this.http.get(`${this.baseUrl}/users.json`).pipe(
+      map((allUsers: any) => {
+        console.log('All users from Firebase:', allUsers);
+        
+        if (!allUsers) {
+          console.log('No users found in database');
           throw new Error('Invalid username or mobile number');
         }
-
-        const users = Object.keys(response).map(key => ({
-          ...response[key],
+        
+        // Convert Firebase object to array of users with IDs
+        const usersArray = Object.keys(allUsers).map(key => ({
+          ...allUsers[key],
           id: key
         }));
-
-        console.log('Found users with matching username:', users);
         
-        // Find the user with matching mobile number
-        // Convert both to strings to ensure proper comparison
-        const user = users.find(u => String(u.mobileNumber) === String(mobileNumber));
+        console.log('Converted users array:', usersArray);
         
-        if (!user) {
-          console.log('No user found with matching mobile number');
+        // Find user with matching username
+        const userWithMatchingUsername = usersArray.find(u => 
+          u.userName && u.userName.toLowerCase() === userName.toLowerCase()
+        );
+        
+        console.log('User with matching username:', userWithMatchingUsername);
+        
+        if (!userWithMatchingUsername) {
+          console.log('No user found with this username');
           throw new Error('Invalid username or mobile number');
         }
-
-        console.log('Successfully authenticated user:', user);
-
+        
+        // Check if mobile number matches
+        if (String(userWithMatchingUsername.mobileNumber) !== String(mobileNumber)) {
+          console.log('Mobile number does not match');
+          console.log('Expected:', String(userWithMatchingUsername.mobileNumber));
+          console.log('Received:', String(mobileNumber));
+          throw new Error('Invalid username or mobile number');
+        }
+        
+        console.log('Successfully authenticated user:', userWithMatchingUsername);
+        
         // Save user to localStorage
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('currentUser', JSON.stringify(userWithMatchingUsername));
         
         // Update subjects
-        this.currentUserSubject.next(user);
+        this.currentUserSubject.next(userWithMatchingUsername);
         this.isAuthenticatedSubject.next(true);
         
-        return user;
+        return userWithMatchingUsername;
       }),
       catchError(error => {
         console.error('Login error:', error);
@@ -126,17 +160,17 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  private checkUserNameExists(userName: string): Observable<boolean> {
-    return this.http.get<{[key: string]: User}>(`${this.baseUrl}/users.json?orderBy="userName"&equalTo="${userName}"`).pipe(
-      map(response => {
-        return Object.keys(response || {}).length > 0;
-      }),
-      catchError(error => {
-        console.error('Error checking username:', error);
-        return of(false);
-      })
-    );
-  }
+  // private checkUserNameExists(userName: string): Observable<boolean> {
+  //   return this.http.get<{[key: string]: User}>(`${this.baseUrl}/users.json?orderBy="userName"&equalTo="${userName}"`).pipe(
+  //     map(response => {
+  //       return Object.keys(response || {}).length > 0;
+  //     }),
+  //     catchError(error => {
+  //       console.error('Error checking username:', error);
+  //       return of(false);
+  //     })
+  //   );
+  // }
 
   updateUser(user: User): Observable<User> {
     if (!user.id) {
