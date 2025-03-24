@@ -36,10 +36,15 @@
     </div>
 
     <!-- Account Section -->
-    <div class="account-section">
+    <div class="account-section" (click)="currentUser ? null : openAuthModal()">
       <div class="account-text">
-        <span class="hello">Hello, Sign in</span>
-        <span class="account">Account & Lists</span>
+        <span class="hello">{{ currentUser ? 'Hello, ' + currentUser.fullName : 'Hello, Sign in' }}</span>
+        <span class="account">
+          <ng-container *ngIf="currentUser; else accountLists">
+            <span (click)="logout()" class="logout-link">Sign Out</span>
+          </ng-container>
+          <ng-template #accountLists>Account & Lists</ng-template>
+        </span>
       </div>
     </div>
 
@@ -55,7 +60,7 @@
     <div class="cart-section">
       <div class="cart-icon">
         <i class="fa fa-shopping-cart"></i>
-        <span class="cart-count">0</span>
+        <span class="cart-count">{{ currentUser?.cart?.length || 0 }}</span>
       </div>
       <div class="cart-text">
         <span>Cart</span>
@@ -63,3 +68,6 @@
     </div>
   </div>
 </header>
+
+<!-- Auth Modal -->
+<app-auth-modal *ngIf="showAuthModal" (close)="closeAuthModal()"></app-auth-modal>

@@ -109,6 +109,10 @@
   cursor: pointer;
 }
 
+.account-section {
+  cursor: pointer;
+}
+
 .account-text, .returns-text {
   display: flex;
   flex-direction: column;
@@ -121,6 +125,15 @@
 .account, .orders {
   font-size: 14px;
   font-weight: bold;
+}
+
+.logout-link {
+  color: #e77600;
+  cursor: pointer;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
 }
 
 /* Cart Section */

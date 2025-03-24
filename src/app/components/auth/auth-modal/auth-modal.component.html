@@ -1,0 +1,28 @@
+<div class="auth-modal-overlay">
+  <div class="auth-modal">
+    <div class="auth-modal-header">
+      <h2>{{ activeTab === 'login' ? 'Sign In' : 'Create Account' }}</h2>
+      <button class="close-button" (click)="closeModal()">×</button>
+    </div>
+    
+    <div class="auth-modal-tabs">
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'login'" 
+        (click)="switchTab('login')">Sign In</button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'signup'" 
+        (click)="switchTab('signup')">Create Account</button>
+    </div>
+    
+    <div class="auth-modal-content">
+      <app-login 
+        *ngIf="activeTab === 'login'" 
+        (loginSuccess)="onLoginSuccess()"></app-login>
+      <app-signup 
+        *ngIf="activeTab === 'signup'" 
+        (signupSuccess)="onSignupSuccess()"></app-signup>
+    </div>
+  </div>
+</div>

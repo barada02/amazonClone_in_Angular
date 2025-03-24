@@ -40,7 +40,15 @@
           <span class="reviews">(128)</span>
         </div>
         <p class="product-description">{{ product.description }}</p>
-        <button class="add-to-cart-btn">Add to Cart</button>
+        <button 
+          class="add-to-cart-btn" 
+          (click)="addToCart(product)" 
+          [class.disabled]="!currentUser"
+          [title]="currentUser ? 'Add to Cart' : 'Please sign in to add items to your cart'"
+        >
+          <span *ngIf="currentUser">Add to Cart</span>
+          <span *ngIf="!currentUser">Sign in to Add</span>
+        </button>
       </div>
     </div>
   </div>

@@ -1,0 +1,63 @@
+<div class="signup-form-container">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <!-- Error message -->
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
+    <!-- Full Name field -->
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input 
+        type="text" 
+        id="fullName" 
+        formControlName="fullName" 
+        [class.invalid]="signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched"
+      >
+      <div class="validation-error" *ngIf="signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched">
+        <span *ngIf="signupForm.get('fullName')?.errors?.['required']">Full name is required</span>
+        <span *ngIf="signupForm.get('fullName')?.errors?.['minlength']">Full name must be at least 3 characters</span>
+      </div>
+    </div>
+    
+    <!-- Username field -->
+    <div class="form-group">
+      <label for="userName">Username</label>
+      <input 
+        type="text" 
+        id="userName" 
+        formControlName="userName" 
+        [class.invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched"
+      >
+      <div class="validation-error" *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
+        <span *ngIf="signupForm.get('userName')?.errors?.['required']">Username is required</span>
+        <span *ngIf="signupForm.get('userName')?.errors?.['minlength']">Username must be at least 4 characters</span>
+      </div>
+    </div>
+    
+    <!-- Mobile number field -->
+    <div class="form-group">
+      <label for="mobileNumber">Mobile Number</label>
+      <input 
+        type="tel" 
+        id="mobileNumber" 
+        formControlName="mobileNumber" 
+        [class.invalid]="signupForm.get('mobileNumber')?.invalid && signupForm.get('mobileNumber')?.touched"
+      >
+      <div class="validation-error" *ngIf="signupForm.get('mobileNumber')?.invalid && signupForm.get('mobileNumber')?.touched">
+        <span *ngIf="signupForm.get('mobileNumber')?.errors?.['required']">Mobile number is required</span>
+        <span *ngIf="signupForm.get('mobileNumber')?.errors?.['pattern']">Please enter a valid 10-digit mobile number</span>
+      </div>
+    </div>
+    
+    <!-- Submit button -->
+    <button 
+      type="submit" 
+      class="signup-button" 
+      [disabled]="loading"
+    >
+      <span *ngIf="!loading">Create Account</span>
+      <span *ngIf="loading">Creating account...</span>
+    </button>
+  </form>
+</div>

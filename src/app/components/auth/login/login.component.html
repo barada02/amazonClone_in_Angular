@@ -1,0 +1,47 @@
+<div class="login-form-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Error message -->
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
+    <!-- Username field -->
+    <div class="form-group">
+      <label for="userName">Username</label>
+      <input 
+        type="text" 
+        id="userName" 
+        formControlName="userName" 
+        [class.invalid]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched"
+      >
+      <div class="validation-error" *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
+        <span *ngIf="loginForm.get('userName')?.errors?.['required']">Username is required</span>
+      </div>
+    </div>
+    
+    <!-- Mobile number field -->
+    <div class="form-group">
+      <label for="mobileNumber">Mobile Number</label>
+      <input 
+        type="tel" 
+        id="mobileNumber" 
+        formControlName="mobileNumber" 
+        [class.invalid]="loginForm.get('mobileNumber')?.invalid && loginForm.get('mobileNumber')?.touched"
+      >
+      <div class="validation-error" *ngIf="loginForm.get('mobileNumber')?.invalid && loginForm.get('mobileNumber')?.touched">
+        <span *ngIf="loginForm.get('mobileNumber')?.errors?.['required']">Mobile number is required</span>
+        <span *ngIf="loginForm.get('mobileNumber')?.errors?.['pattern']">Please enter a valid 10-digit mobile number</span>
+      </div>
+    </div>
+    
+    <!-- Submit button -->
+    <button 
+      type="submit" 
+      class="login-button" 
+      [disabled]="loading"
+    >
+      <span *ngIf="!loading">Sign In</span>
+      <span *ngIf="loading">Signing in...</span>
+    </button>
+  </form>
+</div>

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-product-display',
@@ -14,11 +16,15 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
   products: Product[] = [];
   loading: boolean = true;
   error: string | null = null;
+  currentUser: User | null = null;
   
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AuthService) {}
   
   ngOnInit() {
     this.loadProducts();
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
   }
   
   ngOnChanges(changes: SimpleChanges) {
@@ -63,6 +69,27 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
   
   retryLoading() {
     this.loadProducts();
+  }
+  
+  addToCart(product: Product) {
+    if (!this.currentUser) {
+      // Trigger authentication flow - this could be emitting an event or using a service
+      alert('Please sign in to add items to your cart');
+      return;
+    }
+    
+    // Add the product to the user's cart using the AuthService
+    this.authService.addToCart(product).subscribe({
+      next: (updatedUser) => {
+        console.log('Product added to cart successfully');
+        // You could show a success message here
+        alert(`${product.name} has been added to your cart!`);
+      },
+      error: (error) => {
+        console.error('Error adding product to cart:', error);
+        alert('Failed to add product to cart. Please try again.');
+      }
+    });
   }
   
   getImagePath(product: Product): string {

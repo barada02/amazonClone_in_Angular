@@ -101,6 +101,18 @@
   background-color: #F7CA00;
 }
 
+.add-to-cart-btn.disabled {
+  background: #e7e7e7;
+  border-color: #aaa;
+  color: #767676;
+  cursor: not-allowed;
+}
+
+.add-to-cart-btn.disabled:hover {
+  background: #e7e7e7;
+  box-shadow: none;
+}
+
 .product-display-container {
   max-width: 1500px;
   margin: 0 auto;
@@ -322,6 +334,13 @@
 
 .add-to-cart-btn:hover {
   background-color: #F7CA00;
+}
+
+.add-to-cart-btn.disabled {
+  background: #e7e7e7;
+  border-color: #aaa;
+  color: #767676;
+  cursor: not-allowed;
 }
 
 /* Responsive adjustments */
