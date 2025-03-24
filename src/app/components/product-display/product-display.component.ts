@@ -61,6 +61,10 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
     }
   }
   
+  retryLoading() {
+    this.loadProducts();
+  }
+  
   getImagePath(product: Product): string {
     // Default placeholder if no image path is provided
     if (!product.imagePath) {
@@ -101,10 +105,5 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
     
     const discount = ((originalPrice - offerPrice) / originalPrice) * 100;
     return Math.round(discount);
-  }
-  
-  retryLoading() {
-    this.productService.clearCache();
-    this.loadProducts();
   }
 }

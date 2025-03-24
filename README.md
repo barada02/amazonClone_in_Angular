@@ -6,10 +6,48 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 This is an Amazon clone application built with Angular and Firebase. The application allows users to:
 - Browse products by categories (Electronics and Sweets)
-- View product details
+- View product details with prices, discounts, and ratings
+- Filter products by category
 - Sign up and log in using name and mobile number
 - Add products to cart (authenticated users only)
 - Checkout and place orders
+
+## Development Progress
+
+### Completed Features
+
+1. **Project Setup**
+   - Created Angular project structure
+   - Set up Firebase Realtime Database
+   - Configured routing and basic components
+
+2. **Product Display**
+   - Implemented ProductService to fetch data from Firebase
+   - Created product display component with responsive grid layout
+   - Added loading indicators and error handling
+   - Implemented category navigation and filtering
+   - Added discount percentage calculation
+   - Styled product cards with hover effects
+
+3. **Asset Configuration**
+   - Set up proper asset paths in angular.json
+   - Organized product images in the assets folder
+
+### Upcoming Features
+
+1. **User Authentication**
+   - Sign up and login functionality
+   - User profile management
+
+2. **Shopping Cart**
+   - Add to cart functionality
+   - Cart management (update quantities, remove items)
+   - Cart persistence
+
+3. **Checkout Process**
+   - Address selection
+   - Payment method selection
+   - Order confirmation
 
 ## Setup Instructions
 
@@ -54,9 +92,33 @@ This is an Amazon clone application built with Angular and Firebase. The applica
 ## Project Structure
 
 - `src/app/components`: Contains all Angular components
+  - `category-nav`: Navigation component for product categories
+  - `product-display`: Component for displaying product grid
+  - `header`: Application header with search and navigation
+  - `footer`: Application footer
+  - `offer-slider`: Slider for promotional offers
 - `src/app/services`: Contains services for authentication, products, and cart
+  - `product.service.ts`: Service for fetching and filtering products
 - `src/app/models`: Contains TypeScript interfaces for data models
 - `src/assets`: Contains images and other static assets
+  - `electronics`: Images for electronics products
+  - `sweets`: Images for sweet products
+
+## Firebase Data Structure
+
+The application uses the following data structure in Firebase:
+
+```
+/products
+  /[product-id]
+    - id: string
+    - name: string
+    - price: number
+    - offerPrice: number
+    - description: string
+    - imagePath: string
+    - category: string ("electronics" or "sweets")
+```
 
 ## Development server
 
