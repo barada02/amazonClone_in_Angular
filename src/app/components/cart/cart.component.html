@@ -1,4 +1,11 @@
 <div class="cart-container">
+  <!-- Back Button -->
+  <div class="back-navigation">
+    <button class="back-button" (click)="continueShopping()">
+      <i class="fa fa-arrow-left"></i> Back to Shopping
+    </button>
+  </div>
+
   <!-- Cart Items View -->
   <div *ngIf="checkoutStep === 0">
     <ng-container *ngIf="cartCount$ | async as cartCount">
