@@ -24,7 +24,7 @@ This is an Amazon clone application built with Angular and Firebase. The applica
 2. **Product Display**
    - Implemented ProductService to fetch data from Firebase
    - Created product display component with responsive grid layout
-   - Added loading indicators and error handling
+   - Added loading indicators and error handling.
    - Implemented category navigation and filtering
    - Added discount percentage calculation
    - Styled product cards with hover effects
@@ -37,7 +37,7 @@ This is an Amazon clone application built with Angular and Firebase. The applica
 
 1. **User Authentication**
    - Sign up and login functionality
-   - User profile management
+   - User profile management.
 
 2. **Shopping Cart**
    - Add to cart functionality
