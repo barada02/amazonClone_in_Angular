@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-display',
@@ -11,24 +13,67 @@ import { User } from '../../models/user.model';
   templateUrl: './product-display.component.html',
   styleUrls: ['./product-display.component.css']
 })
-export class ProductDisplayComponent implements OnInit, OnChanges {
-  @Input() selectedCategory: string = 'all';
+export class ProductDisplayComponent implements OnInit, OnChanges, OnDestroy {
+  private _selectedCategory: string = 'all';
+  private queryParamSubscription: Subscription | null = null;
+  
+  @Input() set selectedCategory(value: string) {
+    console.log('ProductDisplayComponent - selectedCategory setter called with:', value);
+    this._selectedCategory = value;
+    // Load products when the category changes via the setter
+    if (this.initialized) {
+      this.loadProducts();
+    }
+  }
+  
+  get selectedCategory(): string {
+    return this._selectedCategory;
+  }
+  
   products: Product[] = [];
   loading: boolean = true;
   error: string | null = null;
   currentUser: User | null = null;
+  initialized: boolean = false;
   
-  constructor(private productService: ProductService, private authService: AuthService) {}
+  constructor(
+    private productService: ProductService, 
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
   
   ngOnInit() {
+    console.log('ProductDisplayComponent - ngOnInit, initial category:', this.selectedCategory);
+    // Clear the cache to ensure we get fresh data
+    this.productService.clearCache();
+    
+    // Subscribe to query parameter changes
+    this.queryParamSubscription = this.route.queryParams.subscribe(params => {
+      if (params['category']) {
+        console.log('ProductDisplayComponent - Query param category detected:', params['category']);
+        this._selectedCategory = params['category'];
+        this.loadProducts();
+      }
+    });
+    
     this.loadProducts();
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+    this.initialized = true;
+  }
+  
+  ngOnDestroy() {
+    // Clean up subscription to prevent memory leaks
+    if (this.queryParamSubscription) {
+      this.queryParamSubscription.unsubscribe();
+    }
   }
   
   ngOnChanges(changes: SimpleChanges) {
+    console.log('ProductDisplayComponent - ngOnChanges fired with changes:', changes);
     if (changes['selectedCategory']) {
+      console.log('Category changed from', changes['selectedCategory'].previousValue, 'to', changes['selectedCategory'].currentValue);
       this.loadProducts();
     }
   }
@@ -36,14 +81,14 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
   loadProducts() {
     this.loading = true;
     this.error = null;
-    console.log('Loading products for category:', this.selectedCategory);
+    console.log('ProductDisplayComponent - Loading products for category:', this.selectedCategory);
     
     if (this.selectedCategory === 'all') {
       this.productService.getAllProducts().subscribe({
         next: (data) => {
           this.products = data;
           this.loading = false;
-          console.log('Loaded all products:', data);
+          console.log('Loaded all products:', data.length);
         },
         error: (err) => {
           this.error = 'Failed to load products. Please try again later.';
@@ -56,7 +101,7 @@ export class ProductDisplayComponent implements OnInit, OnChanges {
         next: (data) => {
           this.products = data;
           this.loading = false;
-          console.log('Loaded products for category:', this.selectedCategory, data);
+          console.log('Loaded products for category:', this.selectedCategory, data.length);
         },
         error: (err) => {
           this.error = 'Failed to load products. Please try again later.';

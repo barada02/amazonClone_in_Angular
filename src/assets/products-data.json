@@ -27,6 +27,33 @@
         "description": "Google's premium smartphone with exceptional camera capabilities and clean Android experience",
         "imagePath": "assets/electronics/Google-Pixel-9-Pro-XL.png",
         "category": "electronics"
+      },
+      "product4": {
+        "id": "e4",
+        "name": "Surface Pro 11",
+        "price": 1299.99,
+        "offerPrice": 1199.99,
+        "description": "Microsoft's versatile 2-in-1 laptop with touchscreen and powerful performance for productivity",
+        "imagePath": "assets/electronics/SurfacePro11.png",
+        "category": "electronics"
+      },
+      "product5": {
+        "id": "e5",
+        "name": "Gaming Mouse",
+        "price": 79.99,
+        "offerPrice": 59.99,
+        "description": "High-precision gaming mouse with customizable RGB lighting and programmable buttons",
+        "imagePath": "assets/electronics/GamingMouse.png",
+        "category": "electronics"
+      },
+      "product6": {
+        "id": "e6",
+        "name": "GeForce RTX 3090",
+        "price": 1499.99,
+        "offerPrice": 1299.99,
+        "description": "NVIDIA's flagship graphics card with ray tracing capabilities for ultimate gaming performance",
+        "imagePath": "assets/electronics/GforceRTX3090.png",
+        "category": "electronics"
       }
     },
     "sweets": {

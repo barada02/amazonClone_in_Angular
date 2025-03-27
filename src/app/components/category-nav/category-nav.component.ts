@@ -13,8 +13,8 @@ export class CategoryNavComponent {
   activeCategory: string = 'all';
   
   selectCategory(category: string) {
+    console.log('CategoryNavComponent - Category selected:', category);
     this.activeCategory = category;
     this.categorySelected.emit(category);
-    console.log('Category selected:', category);
   }
 }

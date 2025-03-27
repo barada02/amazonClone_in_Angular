@@ -13,7 +13,7 @@ const firebaseUrl = 'angulartest-93e44-default-rtdb.asia-southeast1.firebasedata
 // Options for the HTTPS request
 const options = {
   hostname: firebaseUrl,
-  path: '/.json',
+  path: '/products.json',
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ req.on('error', (error) => {
 });
 
 // Write data to request body
-req.write(JSON.stringify(jsonData));
+req.write(JSON.stringify(jsonData.products));
 req.end();
 
 console.log('Uploading data to Firebase...');
