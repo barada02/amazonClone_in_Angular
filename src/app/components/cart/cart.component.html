@@ -104,6 +104,76 @@
       </div>
     </div>
 
+    <!-- Card Payment Form -->
+    <div *ngIf="paymentMethod === 'card'" class="payment-details card-payment">
+      <h3>Enter Card Details</h3>
+      <div class="card-form">
+        <div class="form-group">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" [(ngModel)]="cardNumber">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiry">Expiry Date</label>
+            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" [(ngModel)]="cardExpiry">
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="password" id="cvv" placeholder="***" maxlength="3" [(ngModel)]="cardCvv">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nameOnCard">Name on Card</label>
+          <input type="text" id="nameOnCard" placeholder="John Doe" [(ngModel)]="cardName">
+        </div>
+        <button class="verify-btn" (click)="verifyCardPayment()" [disabled]="isProcessing">
+          {{ isProcessing ? 'Verifying...' : 'Verify Card' }}
+        </button>
+        <div *ngIf="isPaymentVerified" class="verification-success">
+          <i class="fa fa-check-circle"></i> Card verified successfully
+        </div>
+        <div class="card-icons">
+          <span class="card-icon visa">Visa</span>
+          <span class="card-icon mastercard">Mastercard</span>
+          <span class="card-icon amex">Amex</span>
+          <span class="card-icon rupay">RuPay</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPI Payment Form -->
+    <div *ngIf="paymentMethod === 'upi'" class="payment-details upi-payment">
+      <h3>Pay via UPI</h3>
+      <div class="upi-container">
+        <div class="qr-code">
+          <div class="qr-placeholder">
+            <!-- Dummy QR code -->
+            <div class="qr-pattern"></div>
+          </div>
+          <p>Scan QR code with any UPI app</p>
+        </div>
+        <div class="upi-divider">OR</div>
+        <div class="upi-id-form">
+          <div class="form-group">
+            <label for="upiId">Enter UPI ID</label>
+            <input type="text" id="upiId" placeholder="yourname@upi" [(ngModel)]="upiId">
+          </div>
+          <button class="verify-btn" (click)="verifyUpiPayment()" [disabled]="isVerifying">
+            {{ isVerifying ? 'Verifying...' : 'Verify' }}
+          </button>
+          <div *ngIf="isPaymentVerified" class="verification-success">
+            <i class="fa fa-check-circle"></i> UPI ID verified successfully
+          </div>
+          <div class="upi-apps">
+            <span class="upi-app">Google Pay</span>
+            <span class="upi-app">PhonePe</span>
+            <span class="upi-app">Paytm</span>
+            <span class="upi-app">BHIM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <ng-container *ngIf="cartCount$ | async as cartCount">
       <ng-container *ngIf="cartTotal$ | async as cartTotal">
         <div class="order-summary">
@@ -134,7 +204,7 @@
 
     <div class="form-actions">
       <button class="back-btn" (click)="checkoutStep = 1">Back to Shipping</button>
-      <button class="place-order-btn" (click)="confirmOrder()" [disabled]="isProcessing">
+      <button class="place-order-btn" (click)="confirmOrder()" [disabled]="isProcessing || (paymentMethod !== 'cod' && !isPaymentVerified)">
         {{ isProcessing ? 'Processing...' : 'Place Order' }}
       </button>
     </div>
