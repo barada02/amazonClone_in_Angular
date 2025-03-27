@@ -5,12 +5,10 @@
     <app-category-nav *ngIf="!isCartRoute()" (categorySelected)="onCategorySelected($event)"></app-category-nav>
     
     <div class="content-area">
-      <app-offer-slider *ngIf="!isCartRoute()"></app-offer-slider>
-      <app-product-display [selectedCategory]="selectedCategory" [searchQuery]="searchQuery"></app-product-display>
+      <app-offer-slider *ngIf="!isCartRoute() && !searchQuery"></app-offer-slider>
+      <router-outlet></router-outlet>
     </div>
   </div>
 
   <app-footer></app-footer>
-
-  <router-outlet></router-outlet>
 </div>
