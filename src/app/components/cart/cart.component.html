@@ -32,8 +32,8 @@
               <div class="item-details">
                 <h3 class="item-name">{{ item.name }}</h3>
                 <div class="item-price">
-                  <span class="current-price" *ngIf="item.offerPrice">&#8377;{{ item.offerPrice }}</span>
-                  <span class="original-price" [class.strikethrough]="item.offerPrice">&#8377;{{ item.price }}</span>
+                  <span class="current-price" *ngIf="item.offerPrice">&#8377;{{ item.offerPrice | number:'1.2-2' }}</span>
+                  <span class="original-price" [class.strikethrough]="item.offerPrice">&#8377;{{ item.price | number:'1.2-2' }}</span>
                   <span class="discount-badge" *ngIf="getDiscountPercentage(item) > 0">-{{ getDiscountPercentage(item) }}%</span>
                 </div>
                 <p class="item-description">{{ item.description }}</p>
@@ -51,7 +51,7 @@
               <h3>Order Summary</h3>
               <div class="summary-row">
                 <span>Items ({{ cartCount }}):</span>
-                <span>&#8377;{{ cartTotal }}</span>
+                <span>&#8377;{{ cartTotal | number:'1.2-2' }}</span>
               </div>
               <div class="summary-row">
                 <span>Shipping & handling:</span>
@@ -59,7 +59,7 @@
               </div>
               <div class="summary-row total">
                 <span>Order Total:</span>
-                <span>&#8377;{{ cartTotal + 40 }}</span>
+                <span>&#8377;{{ (cartTotal + 40) | number:'1.2-2' }}</span>
               </div>
               <button class="checkout-btn" (click)="proceedToCheckout()">Proceed to Checkout</button>
             </div>
@@ -110,7 +110,7 @@
           <h3>Order Summary</h3>
           <div class="summary-row">
             <span>Items ({{ cartCount }}):</span>
-            <span>&#8377;{{ cartTotal }}</span>
+            <span>&#8377;{{ cartTotal | number:'1.2-2' }}</span>
           </div>
           <div class="summary-row">
             <span>Shipping & handling:</span>
@@ -118,7 +118,7 @@
           </div>
           <div class="summary-row total">
             <span>Order Total:</span>
-            <span>&#8377;{{ cartTotal + 40 }}</span>
+            <span>&#8377;{{ (cartTotal + 40) | number:'1.2-2' }}</span>
           </div>
           <div class="summary-row">
             <span>Shipping Address:</span>

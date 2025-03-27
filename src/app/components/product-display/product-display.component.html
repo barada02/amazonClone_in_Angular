@@ -31,8 +31,8 @@
       <div class="product-info">
         <h3 class="product-title">{{ product.name }}</h3>
         <div class="product-price">
-          <span class="current-price">${{ product.offerPrice }}</span>
-          <span class="original-price" *ngIf="product.price > product.offerPrice">${{ product.price }}</span>
+          <span class="current-price">₹{{ product.offerPrice | number:'1.2-2' }}</span>
+          <span class="original-price" *ngIf="product.price > product.offerPrice">₹{{ product.price | number:'1.2-2' }}</span>
           <span class="discount" *ngIf="product.price > product.offerPrice">{{ calculateDiscount(product.price, product.offerPrice) }}% off</span>
         </div>
         <div class="product-rating">
