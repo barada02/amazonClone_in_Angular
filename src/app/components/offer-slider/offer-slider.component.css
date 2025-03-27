@@ -8,39 +8,52 @@
   max-width: 1500px;
   margin: 0 auto;
   padding: 0 15px;
-}
-
-.placeholder-slide {
-  width: 100%;
-  height: 300px;
-  background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  overflow: hidden;
   position: relative;
 }
 
-.slide-content {
-  text-align: center;
-  padding: 20px;
-  z-index: 2;
+/* Carousel Styles */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.placeholder-slide::before {
-  content: '';
+.carousel-slides {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://m.media-amazon.com/images/G/31/img21/Wireless/katariy/BAU/OP_Dec/D68533252_IN_WL_BAU_Oneplus_Brand_Page_1500x300.jpg');
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
   background-size: cover;
   background-position: center;
-  opacity: 0.3;
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Slide Content */
+.slide-content {
+  text-align: center;
+  padding: 20px;
+  color: white;
+  max-width: 80%;
+  z-index: 2;
 }
 
 .slide-content h2 {
@@ -53,6 +66,63 @@
   font-size: 18px;
   margin-bottom: 25px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Navigation Controls */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-control:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.carousel-control.prev {
+  left: 15px;
+}
+
+.carousel-control.next {
+  right: 15px;
+}
+
+.carousel-control i {
+  color: #232f3e;
+  font-size: 18px;
+}
+
+/* Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #232f3e;
 }
 
 .shop-now-btn {
@@ -72,7 +142,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .placeholder-slide {
+  .carousel {
     height: 200px;
   }
   
@@ -83,15 +153,25 @@
   .slide-content p {
     font-size: 14px;
   }
+  
+  .carousel-control {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .carousel-control i {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
-  .placeholder-slide {
+  .carousel {
     height: 150px;
   }
   
   .slide-content h2 {
     font-size: 20px;
+    margin-bottom: 8px;
   }
   
   .slide-content p {
@@ -102,5 +182,11 @@
   .shop-now-btn {
     padding: 8px 20px;
     font-size: 14px;
+  }
+  
+  .indicator {
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
   }
 }
