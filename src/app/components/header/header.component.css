@@ -70,6 +70,7 @@
 
 .search-input {
   flex: 1;
+  position: relative;
 }
 
 .search-input input {
@@ -101,6 +102,63 @@
 .search-icon {
   width: 20px;
   height: 20px;
+}
+
+/* Search Suggestions Styles */
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-suggestions li {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+}
+
+.search-suggestions li:last-child {
+  border-bottom: none;
+}
+
+.search-suggestions li:hover {
+  background-color: #f9f9f9;
+}
+
+.search-suggestions li i {
+  margin-right: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+.searching-indicator {
+  padding: 10px 15px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.searching-indicator i {
+  color: #f0a742;
 }
 
 /* Account Section */

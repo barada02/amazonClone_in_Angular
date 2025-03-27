@@ -1,7 +1,16 @@
 <div class="amazon-clone-container">
   <app-header></app-header>
-  <app-category-nav *ngIf="!isCartRoute()" (categorySelected)="onCategorySelected($event)"></app-category-nav>
-  <app-offer-slider *ngIf="!isCartRoute()"></app-offer-slider>
-  <router-outlet></router-outlet>
+
+  <div class="main-content">
+    <app-category-nav *ngIf="!isCartRoute()" (categorySelected)="onCategorySelected($event)"></app-category-nav>
+    
+    <div class="content-area">
+      <app-offer-slider *ngIf="!isCartRoute()"></app-offer-slider>
+      <app-product-display [selectedCategory]="selectedCategory" [searchQuery]="searchQuery"></app-product-display>
+    </div>
+  </div>
+
   <app-footer></app-footer>
+
+  <router-outlet></router-outlet>
 </div>

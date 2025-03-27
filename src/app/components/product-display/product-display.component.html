@@ -1,10 +1,17 @@
 <div class="product-display-container">
   <div class="product-section-header">
-    <h2>{{ selectedCategory === 'all' ? 'All Products' : (selectedCategory | titlecase) + ' Products' }}</h2>
+    <h2>
+      <ng-container *ngIf="searchQuery">
+        Search results for "{{ searchQuery }}" in {{ selectedCategory === 'all' ? 'All Categories' : (selectedCategory | titlecase) }}
+      </ng-container>
+      <ng-container *ngIf="!searchQuery">
+        {{ selectedCategory === 'all' ? 'All Products' : (selectedCategory | titlecase) + ' Products' }}
+      </ng-container>
+    </h2>
   </div>
   
   <!-- Loading indicator -->
-  <div class="loading-container" *ngIf="loading">
+  <div class="loading-container" *ngIf="isLoading">
     <div class="loading-spinner"></div>
     <p>Loading products...</p>
   </div>
@@ -12,42 +19,44 @@
   <!-- Error message -->
   <div class="error-container" *ngIf="error">
     <p class="error-message">{{ error }}</p>
-    <button class="retry-button" (click)="retryLoading()">Try Again</button>
+    <button class="retry-button" (click)="loadProducts()">Try Again</button>
   </div>
   
   <!-- Products grid -->
-  <div class="products-grid" *ngIf="!loading && !error">
+  <div class="products-grid" *ngIf="!isLoading && !error">
     <!-- No products message -->
     <div class="no-products" *ngIf="products.length === 0">
-      <p>No products found in this category.</p>
-      <button class="retry-button" (click)="retryLoading()">Reload Products</button>
+      <p>
+        <ng-container *ngIf="searchQuery">
+          No products found matching "{{ searchQuery }}" in {{ selectedCategory === 'all' ? 'all categories' : selectedCategory }}.
+        </ng-container>
+        <ng-container *ngIf="!searchQuery">
+          No products found in this category.
+        </ng-container>
+      </p>
+      <button class="retry-button" (click)="loadProducts()">Reload Products</button>
     </div>
     
     <!-- Product cards -->
     <div class="product-card" *ngFor="let product of products">
       <div class="product-image">
-        <img [src]="getImagePath(product)" [alt]="product.name">
+        <img [src]="product.imagePath" [alt]="product.name">
       </div>
       <div class="product-info">
         <h3 class="product-title">{{ product.name }}</h3>
         <div class="product-price">
-          <span class="current-price">₹{{ product.offerPrice | number:'1.2-2' }}</span>
-          <span class="original-price" *ngIf="product.price > product.offerPrice">₹{{ product.price | number:'1.2-2' }}</span>
-          <span class="discount" *ngIf="product.price > product.offerPrice">{{ calculateDiscount(product.price, product.offerPrice) }}% off</span>
+          <span class="current-price" *ngIf="product.offerPrice">&#8377;{{ product.offerPrice | number:'1.2-2' }}</span>
+          <span class="current-price" *ngIf="!product.offerPrice">&#8377;{{ product.price | number:'1.2-2' }}</span>
+          <span class="original-price" *ngIf="product.offerPrice && product.price > product.offerPrice">&#8377;{{ product.price | number:'1.2-2' }}</span>
+          <span class="discount" *ngIf="product.offerPrice && product.price > product.offerPrice">{{ getDiscountPercentage(product) }}% off</span>
         </div>
         <div class="product-rating">
           <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span class="reviews">(128)</span>
         </div>
         <p class="product-description">{{ product.description }}</p>
-        <button 
-          class="add-to-cart-btn" 
-          (click)="addToCart(product)" 
-          [class.disabled]="!currentUser"
-          [title]="currentUser ? 'Add to Cart' : 'Please sign in to add items to your cart'"
-        >
-          <span *ngIf="currentUser">Add to Cart</span>
-          <span *ngIf="!currentUser">Sign in to Add</span>
+        <button class="add-to-cart-btn" (click)="addToCart(product)">
+          Add to Cart
         </button>
       </div>
     </div>
