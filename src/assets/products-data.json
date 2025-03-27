@@ -84,6 +84,311 @@
         "imagePath": "assets/sweets/peda.jpg",
         "category": "sweets"
       }
+    },
+    "beverges": {
+      "product1": {
+        "id": "b1",
+        "name": "Badam Shake",
+        "price": 5.99,
+        "offerPrice": 4.99,
+        "description": "Refreshing almond milkshake with a rich, nutty flavor",
+        "imagePath": "assets/beverges/badamshake.jpg",
+        "category": "beverges"
+      },
+      "product2": {
+        "id": "b2",
+        "name": "Chocolate Milkshake",
+        "price": 6.49,
+        "offerPrice": 5.49,
+        "description": "Creamy chocolate milkshake made with premium cocoa",
+        "imagePath": "assets/beverges/chocolate-milkshake.jpg",
+        "category": "beverges"
+      },
+      "product3": {
+        "id": "b3",
+        "name": "Cold Coffee",
+        "price": 4.99,
+        "offerPrice": 3.99,
+        "description": "Chilled coffee blend with a perfect balance of coffee and cream",
+        "imagePath": "assets/beverges/cold-coffee.jpg",
+        "category": "beverges"
+      },
+      "product4": {
+        "id": "b4",
+        "name": "Lassi",
+        "price": 4.49,
+        "offerPrice": 3.79,
+        "description": "Traditional yogurt-based drink with a sweet and tangy flavor",
+        "imagePath": "assets/beverges/lassi.jpg",
+        "category": "beverges"
+      },
+      "product5": {
+        "id": "b5",
+        "name": "Lemon Soda",
+        "price": 3.99,
+        "offerPrice": 2.99,
+        "description": "Refreshing lemon-flavored carbonated drink, perfect for hot days",
+        "imagePath": "assets/beverges/lemon-soda.jpg",
+        "category": "beverges"
+      },
+      "product6": {
+        "id": "b6",
+        "name": "Rose Milk",
+        "price": 4.29,
+        "offerPrice": 3.49,
+        "description": "Sweet, rose-flavored milk drink with a delicate floral aroma",
+        "imagePath": "assets/beverges/rosemilk.jpg",
+        "category": "beverges"
+      }
+    },
+    "dry-fruits": {
+      "product1": {
+        "id": "df1",
+        "name": "Almonds",
+        "price": 14.99,
+        "offerPrice": 12.99,
+        "description": "Premium California almonds, rich in nutrients and perfect for snacking",
+        "imagePath": "assets/dry-fruits/almonds.jpg",
+        "category": "dry-fruits"
+      },
+      "product2": {
+        "id": "df2",
+        "name": "Anjeer (Figs)",
+        "price": 16.99,
+        "offerPrice": 14.49,
+        "description": "Naturally sweet dried figs, high in fiber and minerals",
+        "imagePath": "assets/dry-fruits/anjeer.jpg",
+        "category": "dry-fruits"
+      },
+      "product3": {
+        "id": "df3",
+        "name": "Cashew Nuts",
+        "price": 17.99,
+        "offerPrice": 15.99,
+        "description": "Crunchy, premium quality cashew nuts with a buttery flavor",
+        "imagePath": "assets/dry-fruits/cashunuts.jpg",
+        "category": "dry-fruits"
+      },
+      "product4": {
+        "id": "df4",
+        "name": "Dates",
+        "price": 9.99,
+        "offerPrice": 8.49,
+        "description": "Soft, sweet Medjool dates, a natural energy booster",
+        "imagePath": "assets/dry-fruits/dates.jpg",
+        "category": "dry-fruits"
+      },
+      "product5": {
+        "id": "df5",
+        "name": "Pistachios",
+        "price": 19.99,
+        "offerPrice": 17.99,
+        "description": "Premium roasted pistachios with a distinctive flavor",
+        "imagePath": "assets/dry-fruits/pista.jpg",
+        "category": "dry-fruits"
+      },
+      "product6": {
+        "id": "df6",
+        "name": "Walnuts",
+        "price": 15.99,
+        "offerPrice": 13.99,
+        "description": "Halved walnuts with a rich, earthy flavor and omega-3 benefits",
+        "imagePath": "assets/dry-fruits/walnuts.jpg",
+        "category": "dry-fruits"
+      }
+    },
+    "grocery": {
+      "product1": {
+        "id": "g1",
+        "name": "Bread",
+        "price": 3.49,
+        "offerPrice": 2.99,
+        "description": "Freshly baked whole wheat bread, perfect for sandwiches",
+        "imagePath": "assets/grocery/bread.jpg",
+        "category": "grocery"
+      },
+      "product2": {
+        "id": "g2",
+        "name": "Coffee",
+        "price": 8.99,
+        "offerPrice": 7.49,
+        "description": "Premium arabica coffee beans with a rich aroma",
+        "imagePath": "assets/grocery/coffee.jpg",
+        "category": "grocery"
+      },
+      "product3": {
+        "id": "g3",
+        "name": "Corn Flakes",
+        "price": 4.99,
+        "offerPrice": 3.99,
+        "description": "Crispy breakfast cereal made from toasted corn",
+        "imagePath": "assets/grocery/corn-flakes.jpg",
+        "category": "grocery"
+      },
+      "product4": {
+        "id": "g4",
+        "name": "Fish Fingers",
+        "price": 9.99,
+        "offerPrice": 8.49,
+        "description": "Breaded fish sticks, ready to cook and serve",
+        "imagePath": "assets/grocery/fish-fingers.jpg",
+        "category": "grocery"
+      },
+      "product5": {
+        "id": "g5",
+        "name": "French Fries",
+        "price": 5.99,
+        "offerPrice": 4.99,
+        "description": "Frozen cut potatoes, ready to fry or bake",
+        "imagePath": "assets/grocery/french fires.jpg",
+        "category": "grocery"
+      },
+      "product6": {
+        "id": "g6",
+        "name": "Grilled Chicken",
+        "price": 12.99,
+        "offerPrice": 10.99,
+        "description": "Marinated chicken pieces, ready to heat and serve",
+        "imagePath": "assets/grocery/grilled-chicken.jpg",
+        "category": "grocery"
+      },
+      "product7": {
+        "id": "g7",
+        "name": "Potato Chips",
+        "price": 3.99,
+        "offerPrice": 2.99,
+        "description": "Crunchy potato chips with a perfect blend of salt and spices",
+        "imagePath": "assets/grocery/layes.jpg",
+        "category": "grocery"
+      },
+      "product8": {
+        "id": "g8",
+        "name": "Instant Noodles",
+        "price": 2.49,
+        "offerPrice": 1.99,
+        "description": "Quick-cooking noodles with tasty seasoning",
+        "imagePath": "assets/grocery/magiee.jpg",
+        "category": "grocery"
+      },
+      "product9": {
+        "id": "g9",
+        "name": "Prawn Fry",
+        "price": 14.99,
+        "offerPrice": 12.99,
+        "description": "Seasoned prawns, ready to cook for a quick meal",
+        "imagePath": "assets/grocery/prawn-fry.jpg",
+        "category": "grocery"
+      },
+      "product10": {
+        "id": "g10",
+        "name": "Salt",
+        "price": 1.99,
+        "offerPrice": 1.49,
+        "description": "Pure, iodized table salt for everyday cooking",
+        "imagePath": "assets/grocery/salt.jpg",
+        "category": "grocery"
+      }
+    },
+    "snacks": {
+      "product1": {
+        "id": "sn1",
+        "name": "Spring Rolls",
+        "price": 7.99,
+        "offerPrice": 6.49,
+        "description": "Crispy vegetable spring rolls with a savory filling",
+        "imagePath": "assets/snacks/Spring Rolls.jpg",
+        "category": "snacks"
+      },
+      "product2": {
+        "id": "sn2",
+        "name": "Vegetable Pizza",
+        "price": 11.99,
+        "offerPrice": 9.99,
+        "description": "Freshly baked pizza topped with colorful vegetables and cheese",
+        "imagePath": "assets/snacks/Veg Pizza.jpg",
+        "category": "snacks"
+      },
+      "product3": {
+        "id": "sn3",
+        "name": "Cheese Sandwich",
+        "price": 6.99,
+        "offerPrice": 5.49,
+        "description": "Grilled sandwich with melted cheese and herbs",
+        "imagePath": "assets/snacks/cheese-sandwich.jpg",
+        "category": "snacks"
+      },
+      "product4": {
+        "id": "sn4",
+        "name": "Chicken Lollipop",
+        "price": 9.99,
+        "offerPrice": 8.49,
+        "description": "Spicy chicken wings shaped like lollipops, perfect for appetizers",
+        "imagePath": "assets/snacks/chicken-lollipop.jpg",
+        "category": "snacks"
+      },
+      "product5": {
+        "id": "sn5",
+        "name": "Chicken Tikka",
+        "price": 10.99,
+        "offerPrice": 9.49,
+        "description": "Marinated chicken pieces grilled to perfection",
+        "imagePath": "assets/snacks/chicken-tikka.jpg",
+        "category": "snacks"
+      },
+      "product6": {
+        "id": "sn6",
+        "name": "Egg Roll",
+        "price": 7.49,
+        "offerPrice": 6.29,
+        "description": "Flavorful egg wrapped in a thin flatbread with spices",
+        "imagePath": "assets/snacks/egg-roll.jpg",
+        "category": "snacks"
+      },
+      "product7": {
+        "id": "sn7",
+        "name": "Mutton Kebab",
+        "price": 12.99,
+        "offerPrice": 10.99,
+        "description": "Tender, spiced mutton kebabs, grilled to perfection",
+        "imagePath": "assets/snacks/mutton-kebab.jpg",
+        "category": "snacks"
+      },
+      "product8": {
+        "id": "sn8",
+        "name": "Mutton Seekh Kebab",
+        "price": 13.99,
+        "offerPrice": 11.99,
+        "description": "Minced mutton kebabs on skewers with aromatic spices",
+        "imagePath": "assets/snacks/mutton-seekh-kebab.jpg",
+        "category": "snacks"
+      },
+      "product9": {
+        "id": "sn9",
+        "name": "Mysore Pak",
+        "price": 9.99,
+        "offerPrice": 8.49,
+        "description": "Traditional South Indian sweet made with ghee and gram flour",
+        "imagePath": "assets/snacks/mysore-pak.jpg",
+        "category": "snacks"
+      },
+      "product10": {
+        "id": "sn10",
+        "name": "Samosa",
+        "price": 5.99,
+        "offerPrice": 4.99,
+        "description": "Crispy pastry filled with spiced potatoes and peas",
+        "imagePath": "assets/snacks/samosa.jpg",
+        "category": "snacks"
+      },
+      "product11": {
+        "id": "sn11",
+        "name": "Vegetable Burger",
+        "price": 8.99,
+        "offerPrice": 7.49,
+        "description": "Plant-based burger with a flavorful vegetable patty",
+        "imagePath": "assets/snacks/veg-burger.jpg",
+        "category": "snacks"
+      }
     }
   }
 }
