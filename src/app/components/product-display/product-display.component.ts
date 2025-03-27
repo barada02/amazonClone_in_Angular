@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductService, Product } from '../../services/product.service';
-import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user.model';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models';
+import { CartService } from '../../services/cart.service';
+import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-display',
@@ -13,169 +13,112 @@ import { Subscription } from 'rxjs';
   templateUrl: './product-display.component.html',
   styleUrls: ['./product-display.component.css']
 })
-export class ProductDisplayComponent implements OnInit, OnChanges, OnDestroy {
-  private _selectedCategory: string = 'all';
-  private queryParamSubscription: Subscription | null = null;
-  
-  @Input() set selectedCategory(value: string) {
-    console.log('ProductDisplayComponent - selectedCategory setter called with:', value);
-    this._selectedCategory = value;
-    // Load products when the category changes via the setter
-    if (this.initialized) {
-      this.loadProducts();
-    }
-  }
-  
-  get selectedCategory(): string {
-    return this._selectedCategory;
-  }
+export class ProductDisplayComponent implements OnChanges {
+  @Input() selectedCategory: string = 'all';
+  @Input() searchQuery: string = '';
   
   products: Product[] = [];
-  loading: boolean = true;
+  isLoading: boolean = true;
   error: string | null = null;
-  currentUser: User | null = null;
-  initialized: boolean = false;
-  
+  private routeSubscription: Subscription | null = null;
+
   constructor(
-    private productService: ProductService, 
-    private authService: AuthService,
+    private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) {}
-  
+
   ngOnInit() {
-    console.log('ProductDisplayComponent - ngOnInit, initial category:', this.selectedCategory);
-    // Clear the cache to ensure we get fresh data
-    this.productService.clearCache();
+    // Initial load of products
+    this.loadProducts();
     
-    // Subscribe to query parameter changes
-    this.queryParamSubscription = this.route.queryParams.subscribe(params => {
-      if (params['category']) {
-        console.log('ProductDisplayComponent - Query param category detected:', params['category']);
-        this._selectedCategory = params['category'];
+    // Subscribe to route query params to handle direct navigation
+    this.routeSubscription = this.route.queryParams.subscribe(params => {
+      const category = params['category'] || 'all';
+      const search = params['search'] || '';
+      
+      // Only update if different from current values
+      if (this.selectedCategory !== category || this.searchQuery !== search) {
+        this.selectedCategory = category;
+        this.searchQuery = search;
         this.loadProducts();
       }
     });
-    
-    this.loadProducts();
-    this.authService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-    });
-    this.initialized = true;
   }
   
   ngOnDestroy() {
-    // Clean up subscription to prevent memory leaks
-    if (this.queryParamSubscription) {
-      this.queryParamSubscription.unsubscribe();
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
-  
+
   ngOnChanges(changes: SimpleChanges) {
-    console.log('ProductDisplayComponent - ngOnChanges fired with changes:', changes);
-    if (changes['selectedCategory']) {
-      console.log('Category changed from', changes['selectedCategory'].previousValue, 'to', changes['selectedCategory'].currentValue);
+    console.log('ProductDisplayComponent - ngOnChanges:', changes);
+    
+    // Check if either selectedCategory or searchQuery changed
+    if (
+      (changes['selectedCategory'] && !changes['selectedCategory'].firstChange) ||
+      (changes['searchQuery'] && !changes['searchQuery'].firstChange)
+    ) {
       this.loadProducts();
     }
   }
-  
+
   loadProducts() {
-    this.loading = true;
+    this.isLoading = true;
     this.error = null;
-    console.log('ProductDisplayComponent - Loading products for category:', this.selectedCategory);
     
-    if (this.selectedCategory === 'all') {
-      this.productService.getAllProducts().subscribe({
-        next: (data) => {
-          this.products = data;
-          this.loading = false;
-          console.log('Loaded all products:', data.length);
-        },
-        error: (err) => {
-          this.error = 'Failed to load products. Please try again later.';
-          this.loading = false;
-          console.error('Error fetching products:', err);
-        }
-      });
-    } else {
-      this.productService.getProductsByCategory(this.selectedCategory).subscribe({
-        next: (data) => {
-          this.products = data;
-          this.loading = false;
-          console.log('Loaded products for category:', this.selectedCategory, data.length);
-        },
-        error: (err) => {
-          this.error = 'Failed to load products. Please try again later.';
-          this.loading = false;
-          console.error('Error fetching products:', err);
-        }
-      });
+    console.log(`Loading products for category: ${this.selectedCategory}, search: ${this.searchQuery}`);
+    
+    // If we have a search query, use search method
+    if (this.searchQuery && this.searchQuery.trim() !== '') {
+      this.productService.getProductsBySearch(this.searchQuery, this.selectedCategory)
+        .subscribe({
+          next: (products) => {
+            this.products = products;
+            this.isLoading = false;
+            console.log(`Loaded ${products.length} products from search`);
+          },
+          error: (err) => {
+            console.error('Error loading products:', err);
+            this.error = 'Failed to load products. Please try again.';
+            this.isLoading = false;
+          }
+        });
+    } 
+    // Otherwise use category filter method
+    else {
+      this.productService.getProductsByCategory(this.selectedCategory)
+        .subscribe({
+          next: (products) => {
+            this.products = products;
+            this.isLoading = false;
+            console.log(`Loaded ${products.length} products from category`);
+          },
+          error: (err) => {
+            console.error('Error loading products:', err);
+            this.error = 'Failed to load products. Please try again.';
+            this.isLoading = false;
+          }
+        });
     }
   }
-  
-  retryLoading() {
-    this.loadProducts();
-  }
-  
-  addToCart(product: Product) {
-    if (!this.currentUser) {
-      // Trigger authentication flow - this could be emitting an event or using a service
-      alert('Please sign in to add items to your cart');
-      return;
-    }
-    
-    // Add the product to the user's cart using the AuthService
-    this.authService.addToCart(product).subscribe({
-      next: (updatedUser) => {
+
+  addToCart(product: Product): void {
+    this.cartService.addToCart(product).subscribe({
+      next: () => {
         console.log('Product added to cart successfully');
-        // You could show a success message here
-        alert(`${product.name} has been added to your cart!`);
       },
       error: (error) => {
         console.error('Error adding product to cart:', error);
-        alert('Failed to add product to cart. Please try again.');
       }
     });
   }
-  
-  getImagePath(product: Product): string {
-    // Default placeholder if no image path is provided
-    if (!product.imagePath) {
-      return 'assets/placeholder-product.jpg';
+
+  getDiscountPercentage(product: Product): number {
+    if (product.offerPrice && product.price > product.offerPrice) {
+      return Math.round(((product.price - product.offerPrice) / product.price) * 100);
     }
-    
-    // For Firebase stored images that might be full URLs
-    if (product.imagePath.startsWith('http')) {
-      return product.imagePath;
-    }
-    
-    // For relative paths in the assets folder
-    // Based on our file search, we know the images exist in the assets folder
-    // but the paths might not match exactly
-    
-    // Extract the filename from the path
-    const parts = product.imagePath.split('/');
-    const filename = parts[parts.length - 1];
-    
-    // Check if it's in the electronics category
-    if (product.category === 'electronics') {
-      return `assets/electronics/${filename}`;
-    }
-    
-    // Check if it's in the sweets category
-    if (product.category === 'sweets') {
-      return `assets/sweets/${filename}`;
-    }
-    
-    // If we can't determine the category, return the original path
-    return product.imagePath;
-  }
-  
-  calculateDiscount(originalPrice: number, offerPrice: number): number {
-    if (originalPrice <= 0 || offerPrice <= 0 || offerPrice >= originalPrice) {
-      return 0;
-    }
-    
-    const discount = ((originalPrice - offerPrice) / originalPrice) * 100;
-    return Math.round(discount);
+    return 0;
   }
 }

@@ -5,12 +5,13 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { User } from '../models';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private baseUrl = 'https://angulartest-93e44-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  private baseUrl = environment.databaseURL;
   private cartItemsSubject = new BehaviorSubject<Product[]>([]);
   public cartItems$ = this.cartItemsSubject.asObservable();
 

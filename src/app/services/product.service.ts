@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, shareReplay, of, catchError, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Product {
   id: string;
@@ -16,8 +17,8 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  // Using the exact Firebase URL from your memory
-  private baseUrl = 'https://angulartest-93e44-default-rtdb.asia-southeast1.firebasedatabase.app';
+  // Using the database URL from environment
+  private baseUrl = environment.databaseURL;
   private productsCache: Product[] | null = null;
   
   constructor(private http: HttpClient) {}
@@ -103,6 +104,34 @@ export class ProductService {
         
         console.log(`Filtered products for category '${category}':`, filtered.length);
         return filtered;
+      })
+    );
+  }
+  
+  getProductsBySearch(query: string, category: string = 'all'): Observable<Product[]> {
+    console.log(`Searching for "${query}" in category: ${category}`);
+    return this.getAllProducts().pipe(
+      map(products => {
+        // First filter by category if needed
+        let filteredProducts = products;
+        if (category !== 'all') {
+          filteredProducts = products.filter(product => 
+            product.category && product.category.toLowerCase() === category.toLowerCase()
+          );
+          console.log(`Filtered to ${filteredProducts.length} products in category ${category}`);
+        }
+        
+        // Then filter by search query
+        if (query && query.trim() !== '') {
+          const normalizedQuery = query.toLowerCase().trim();
+          filteredProducts = filteredProducts.filter(product => 
+            product.name.toLowerCase().includes(normalizedQuery) || 
+            (product.description && product.description.toLowerCase().includes(normalizedQuery))
+          );
+          console.log(`Found ${filteredProducts.length} products matching "${query}"`);
+        }
+        
+        return filteredProducts;
       })
     );
   }

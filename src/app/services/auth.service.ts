@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap, switchMap, take } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'https://angulartest-93e44-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  private baseUrl = environment.databaseURL;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
@@ -159,18 +160,6 @@ export class AuthService {
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
-
-  // private checkUserNameExists(userName: string): Observable<boolean> {
-  //   return this.http.get<{[key: string]: User}>(`${this.baseUrl}/users.json?orderBy="userName"&equalTo="${userName}"`).pipe(
-  //     map(response => {
-  //       return Object.keys(response || {}).length > 0;
-  //     }),
-  //     catchError(error => {
-  //       console.error('Error checking username:', error);
-  //       return of(false);
-  //     })
-  //   );
-  // }
 
   updateUser(user: User): Observable<User> {
     if (!user.id) {

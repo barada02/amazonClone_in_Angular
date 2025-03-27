@@ -1,7 +1,7 @@
 <header class="amazon-header">
   <div class="header-container">
     <!-- Logo Section -->
-    <div class="logo-section">
+    <div class="logo-section" [routerLink]="['/']">
       <img src="assets/amazonlogo.jpg" alt="Amazon Logo" class="amazon-logo">
     </div>
 
@@ -19,17 +19,38 @@
     <!-- Search Section -->
     <div class="search-section">
       <div class="search-dropdown">
-        <select>
+        <select [(ngModel)]="selectedCategory">
           <option value="all">All</option>
           <option value="electronics">Electronics</option>
           <option value="sweets">Sweets</option>
+          <option value="beverges">Beverages</option>
+          <option value="dry-fruits">Dry Fruits</option>
+          <option value="grocery">Grocery</option>
+          <option value="snacks">Snacks</option>
         </select>
       </div>
       <div class="search-input">
-        <input type="text" placeholder="Search Amazon">
+        <input 
+          type="text" 
+          placeholder="Search Amazon" 
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput(searchQuery)"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()"
+        >
+        <div *ngIf="showSuggestions" class="search-suggestions">
+          <div *ngIf="isSearching" class="searching-indicator">
+            <i class="fa fa-spinner fa-spin"></i> Searching...
+          </div>
+          <ul *ngIf="!isSearching && searchSuggestions.length > 0">
+            <li *ngFor="let suggestion of searchSuggestions" (mousedown)="selectSuggestion(suggestion)">
+              <i class="fa fa-search"></i> {{ suggestion }}
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="search-button">
-        <button>
+        <button (click)="performSearch()">
           <img src="assets/search.png" alt="Search" class="search-icon">
         </button>
       </div>
