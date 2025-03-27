@@ -23,42 +23,42 @@ export class OfferSliderComponent implements OnInit, OnDestroy {
       id: 1,
       title: 'Amazing Electronics Deals',
       description: 'Up to 30% off on the latest gadgets and devices',
-      backgroundImage: 'https://m.media-amazon.com/images/G/31/img21/Wireless/katariy/BAU/OP_Dec/D68533252_IN_WL_BAU_Oneplus_Brand_Page_1500x300.jpg',
+      backgroundImage: 'assets/banners/electronics.jpg',
       category: 'electronics'
     },
     {
       id: 2,
       title: 'Sweet Treats for Everyone',
       description: 'Delicious sweets at special prices',
-      backgroundImage: 'https://m.media-amazon.com/images/G/31/img22/Grocery/MayART/Chocolate/Header_Desktop_Chocolate._CB589850222_.jpg',
+      backgroundImage: 'assets/banners/sweets.jpg',
       category: 'sweets'
     },
     {
       id: 3,
       title: 'Refreshing Beverages',
       description: 'Cool drinks for hot summer days',
-      backgroundImage: 'https://m.media-amazon.com/images/G/31/img23/Grocery/GW/Coffee_GW_PC._CB573254468_.jpg',
+      backgroundImage: 'assets/banners/beverages.jpg',
       category: 'beverges'
     },
     {
       id: 4,
       title: 'Premium Dry Fruits',
       description: 'Healthy and nutritious options for snacking',
-      backgroundImage: 'https://m.media-amazon.com/images/G/31/img22/Grocery/MayART/Dry-Fruits/Header_Desktop_Dry-Fruits._CB589850222_.jpg',
+      backgroundImage: 'assets/banners/dryfruits.jpg',
       category: 'dry-fruits'
     },
     {
       id: 5,
       title: 'Grocery Essentials',
       description: 'Everyday items at the best prices',
-      backgroundImage: 'https://m.media-amazon.com/images/G/31/img23/Grocery/GW/Headers/PC_Header_Grocery_1500x300._CB573254468_.jpg',
+      backgroundImage: 'assets/banners/grocery.jpg',
       category: 'grocery'
     },
     {
       id: 6,
       title: 'Delicious Snacks',
       description: 'Satisfy your cravings with our tasty snacks',
-      backgroundImage: 'https://m.media-amazon.com/images/G/31/img22/Grocery/MayART/Snacks/Header_Desktop_Snacks._CB589850222_.jpg',
+      backgroundImage: 'assets/banners/snacks.jpg',
       category: 'snacks'
     }
   ];
